@@ -331,4 +331,22 @@ function filtrerTrips() {
    }
 
   }
-  filtrerTrips();
+  // filtrerTrips();
+
+  function trierTrips() {
+    for (let i = 0; i < trips.length; i++) {
+     for (let j = i+1; j < trips.length; j++) {
+      let res ;
+         if (trips[i].price> trips[j].price) {
+             res = trips[i]
+             trips[i]= trips[j]
+             trips[j]=res
+         }
+         
+      
+     }
+
+      console.log(trips[i])
+    }
+  }
+// trierTrips()
