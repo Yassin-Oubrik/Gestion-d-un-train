@@ -219,7 +219,7 @@ function acheterTicket() {
 
       if (trips[i].availableSeats > 0) {
         ticket_id++;
-
+         
         let ticket = {
           id: ticket_id,
           passengerName: nom_p,
@@ -231,6 +231,7 @@ function acheterTicket() {
         tickets.push(ticket);
 
         trips[i].availableSeats = trips[i].availableSeats - 1;
+        
       } else {
         console.log("Train complet");
       }
@@ -311,7 +312,23 @@ function rechercherTicket() {
     }
   }
     if (trouve == 0) {
-    console.log("ticket introuvable");
+    console.log("Aucun ticket enregistré");
   }
 }
 // rechercherTicket()
+function filtrerTrips() {
+  let ville = prompt('saisir  ville de depart')
+   let res = trips.filter(function (t) {
+     return t.departure == ville;
+   })
+   if (res.length>0) {
+       for (let i = 0; i < res.length; i++) {
+        console.log(res[i].departure + ' → '+ res[i].destination + ' : '+ res[i].price + ' DH' )
+        
+       }
+   }else{
+    console.log('aucun traget dissponible')
+   }
+
+  }
+  filtrerTrips();
