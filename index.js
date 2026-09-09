@@ -287,7 +287,7 @@ function acheterTicket() {
         tickets.push(nouveauTicket);
         // n9s place
         trips[i].availableSeats--;
-
+        console.log('----------------------')
         console.log("Ticket acheté avec succès.");
         console.log("Ticket #" + nouveauTicket.id);
         console.log("Passager : " + nouveauTicket.nom);
@@ -297,6 +297,7 @@ function acheterTicket() {
         console.log("Place : " + nouveauTicket.seat_number);
         console.log("Prix : " + nouveauTicket.price + " DH");
       } else {
+        console.log('----------------------')
         console.log("Train complet");
       }
 
@@ -337,6 +338,7 @@ function annuller_ticket() {
         if (tickets[i].tripId == trips[j].id) {
           tickets.splice(i, 1);
           trips[j].availableSeats++;
+          console.log('anuule avec succes')
           trouve = 1;
           return;
         }
@@ -378,6 +380,7 @@ function rechercherTicket() {
     }
   }
   if (trouve == 0) {
+    console.log('----------------------')
     console.log("Aucun ticket enregistré");
   }
 }
