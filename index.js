@@ -181,9 +181,6 @@ const trips = [
     availableSeats: 50,
   },
 ];
-
-
-// afficherTrips()
 const tickets = [];
 let ticket_id = 0;
 acheterTicketTest('ahmed',1)
@@ -191,9 +188,6 @@ acheterTicketTest('med',2)
 acheterTicketTest('mehdi',8)
 acheterTicketTest('ali',1)
 acheterTicketTest('yassine',2)
-
-
-
 
 let action;
 do {
@@ -224,7 +218,7 @@ do {
     trierTrips();
   } else if (action == 8) {
     statistique();
-  } else if (action == 0) {
+  } else if (action== 0){
   } else {
     console.log("option invalide.");
   }
@@ -399,19 +393,12 @@ function filtrerTrips() {
   if (res.length > 0) {
     for (let i = 0; i < res.length; i++) {
       console.log(
-        res[i].departure +
-          " → " +
-          res[i].destination +
-          " : " +
-          res[i].price +
-          " DH",
-      );
+        res[i].departure +" → " + res[i].destination + " : " + res[i].price + " DH");
     }
   } else {
     console.log("aucun traget dissponible");
   }
 }
-
 
 
 
@@ -430,7 +417,6 @@ function trierTrips() {
         trips[j] = res;
       }
     }
-
     console.log(trips[i]);
   }
 }
@@ -453,23 +439,24 @@ function statistique() {
   }
   console.log("Chiffre d affaires total : " + somme);
 
-  let x = 0;
-  let max;
 
+
+  let taille_max = 0;
+  let index_max;
   for (let i = 0; i < trips.length; i++) {
     let trajet = tickets.filter(function (t) {
       return t.tripId == trips[i].id;
     });
 
-    if (trajet.length > x) {
-      x = trajet.length;
-      max = trips[i];
+    if (trajet.length > taille_max) {
+      taille_max = trajet.length;
+      index_max = trips[i];
     }
   }
-  if (x > 0) {
+  if (taille_max > 0) {
     console.log("Trajet le plus vendu :");
-    console.log(max.departure + " → " + max.destination);
-    console.log(x + " tickets vendus");
+    console.log(index_max.departure + " → " + index_max.destination);
+    console.log(taille_max + " tickets vendus");
   } else {
     console.log("*******************");
     console.log("aucun ticket vendu");
