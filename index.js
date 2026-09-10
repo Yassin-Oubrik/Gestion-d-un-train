@@ -182,10 +182,20 @@ const trips = [
   },
 ];
 
+
+// afficherTrips()
 const tickets = [];
 let ticket_id = 0;
-let action;
+acheterTicketTest('ahmed',1)
+acheterTicketTest('med',2)
+acheterTicketTest('mehdi',8)
+acheterTicketTest('ali',1)
+acheterTicketTest('yassine',2)
 
+
+
+
+let action;
 do {
   console.log("=== RAILWAY MANAGER ===");
   console.log("1. Afficher les trajets");
@@ -195,7 +205,7 @@ do {
   console.log("5. Rechercher un ticket");
   console.log("6. Filtrer les trajets");
   console.log("7. Trier les trajets");
-  console.log("8. Trier les trajets");
+  console.log("8. les statistique");
   console.log("0. Quitter");
   action = Number(prompt("saisir votre choix"));
   if (action == 1) {
@@ -212,19 +222,24 @@ do {
     filtrerTrips();
   } else if (action == 7) {
     trierTrips();
-  }else if (action == 8) {
+  } else if (action == 8) {
     statistique();
-  }
-   else if (action == 0) {
+  } else if (action == 0) {
   } else {
     console.log("option invalide.");
   }
 } while (action != 0);
 
+
+
+
+
+
+
 function afficherTrips() {
   console.log("=== TRAJETS DISPONIBLES === ");
   for (let i = 0; i < trips.length; i++) {
-    console.log("#" +trips[i].id +" " + trips[i].departure + "  →  " + trips[i].destination,);
+    console.log("#" + trips[i].id + " " + trips[i].departure + "  →  " + trips[i].destination);
     console.log("depart :" + trips[i].departureTime);
     console.log("arrivee :" + trips[i].arrivalTime);
     console.log("prix :" + trips[i].price + "DH");
@@ -233,36 +248,32 @@ function afficherTrips() {
   }
 }
 
-// afficherTrips()
+
+
+
+
+
 
 function acheterTicket() {
   let nom_p = prompt("donner le nom de passager :");
   let id_trajet = Number(prompt("donner l id du trajet :"));
 
-  let trouve = 0;
-
   for (let i = 0; i < trips.length; i++) {
     if (trips[i].id == id_trajet) {
-      trouve = 1;
-
       if (trips[i].availableSeats > 0) {
-        // chercher  place lowla khawya
         let place = 1;
-        let ticket;
-
         for (let j = 0; j < 50; j++) {
           let ticket = tickets.find(function (t) {
             return t.tripId == id_trajet && t.seat_number == place;
           });
 
-          if (ticket == undefined) {
+          if (ticket === undefined) {
             break;
           }
 
           place++;
         }
 
-        // créer ticket
         ticket_id++;
 
         let nouveauTicket = {
@@ -272,17 +283,13 @@ function acheterTicket() {
           seat_number: place,
           price: trips[i].price,
         };
-        //zid ticket
         tickets.push(nouveauTicket);
-        // n9s place
         trips[i].availableSeats--;
         console.log("----------------------");
         console.log("Ticket acheté avec succès.");
         console.log("Ticket #" + nouveauTicket.id);
         console.log("Passager : " + nouveauTicket.nom);
-        console.log(
-          "Trajet : " + trips[i].departure + " → " + trips[i].destination,
-        );
+        console.log("Trajet : " + trips[i].departure + " → " + trips[i].destination,);
         console.log("Place : " + nouveauTicket.seat_number);
         console.log("Prix : " + nouveauTicket.price + " DH");
       } else {
@@ -290,15 +297,17 @@ function acheterTicket() {
         console.log("Train complet");
       }
 
-      break;
+      return;
     }
   }
 
-  if (trouve == 0) {
-    console.log("Trajet introuvable.");
-  }
+  console.log("Trajet introuvable.");
 }
-// acheterTicket();
+
+
+
+
+
 
 function afficherTickets() {
   if (tickets.length == 0) {
@@ -315,57 +324,59 @@ function afficherTickets() {
     }
   }
 }
-// afficherTickets();
+  
+
+
+
+
 
 function annuller_ticket() {
-  let trouve = 0;
-  let ticket_id = prompt("donner id de ticket");
+  let ticket_id = Number(prompt("donner id de ticket"));
 
   for (let i = 0; i < tickets.length; i++) {
-    if (ticket_id == tickets[i].id) {
+    if (ticket_id === tickets[i].id) {
       for (let j = 0; j < trips.length; j++) {
         if (tickets[i].tripId == trips[j].id) {
           tickets.splice(i, 1);
           trips[j].availableSeats++;
           console.log("anuule avec succes");
-          trouve = 1;
           return;
         }
       }
     }
   }
 
-  if (trouve == 0) {
-    console.log("ticket introuvable");
-  }
+  console.log("ticket introuvable");
 }
-// acheterTicket()
-// annuller_ticket()
-// afficherTickets()
-// afficherTrips()
+
+
+
+
+
 
 function rechercherTicket() {
   let nom = prompt("nom de passager :");
   let trouve = 0;
-  console.log("=== TICKETS === ");
+
+  console.log("=== TICKETS ===");
+
   for (let i = 0; i < tickets.length; i++) {
     if (tickets[i].nom == nom) {
       trouve = 1;
+
       console.log("Ticket #" + tickets[i].id);
-      console.log("passager :" + tickets[i].nom);
+      console.log("passager : " + tickets[i].nom);
+
       for (let j = 0; j < trips.length; j++) {
         if (trips[j].id == tickets[i].tripId) {
           console.log(
-            "traget :" + trips[j].departure + " → " + trips[j].destination,
+            "trajet : " + trips[j].departure + " → " + trips[j].destination,
           );
+          console.log("prix : " + trips[j].price + " DH");
         }
       }
-      console.log("place :" + tickets[i].seat_number);
-      for (let j = 0; j < trips.length; j++) {
-        if (trips[j].id == tickets[i].tripId) {
-          console.log("prix:" + trips[j].price);
-        }
-      }
+      console.log("place : " + tickets[i].seat_number);
+      console.log();
     }
   }
   if (trouve == 0) {
@@ -374,7 +385,12 @@ function rechercherTicket() {
   }
 }
 
-// rechercherTicket()
+
+
+
+
+
+
 function filtrerTrips() {
   let ville = prompt("saisir  ville de depart");
   let res = trips.filter(function (t) {
@@ -395,7 +411,14 @@ function filtrerTrips() {
     console.log("aucun traget dissponible");
   }
 }
-// filtrerTrips();
+
+
+
+
+
+
+
+
 
 function trierTrips() {
   for (let i = 0; i < trips.length; i++) {
@@ -411,12 +434,17 @@ function trierTrips() {
     console.log(trips[i]);
   }
 }
-// trierTrips()
+
+
+
+
+
+
+
+
 
 function statistique() {
   let total = tickets.length;
-
-
 
   console.log("Nombre total de tickets est :" + total);
   let somme = 0;
@@ -424,9 +452,6 @@ function statistique() {
     somme = somme + tickets[i].price;
   }
   console.log("Chiffre d affaires total : " + somme);
-
-
-
 
   let x = 0;
   let max;
@@ -436,18 +461,71 @@ function statistique() {
       return t.tripId == trips[i].id;
     });
 
-    if (trajet.length > max) {
+    if (trajet.length > x) {
       x = trajet.length;
       max = trips[i];
     }
   }
   if (x > 0) {
     console.log("Trajet le plus vendu :");
-    console.log(max.departure + " → " + maxax.destination);
-    console.log(max + " tickets vendus");
-  }else{
-    console.log("*******************")
-    console.log('aucun ticket vendu')
-    console.log('*****************')
+    console.log(max.departure + " → " + max.destination);
+    console.log(x + " tickets vendus");
+  } else {
+    console.log("*******************");
+    console.log("aucun ticket vendu");
+    console.log("*****************");
   }
 }
+
+
+
+
+
+function acheterTicketTest(nom_p,id_trajet) {
+
+  for (let i = 0; i < trips.length; i++) {
+    if (trips[i].id == id_trajet) {
+      if (trips[i].availableSeats > 0) {
+        let place = 1;
+        for (let j = 0; j < 50; j++) {
+          let ticket = tickets.find(function (t) {
+            return t.tripId == id_trajet && t.seat_number == place;
+          });
+
+          if (ticket === undefined) {
+            break;
+          }
+
+          place++;
+        }
+
+        ticket_id++;
+
+        let nouveauTicket = {
+          id: ticket_id,
+          nom: nom_p,
+          tripId: id_trajet,
+          seat_number: place,
+          price: trips[i].price,
+        };
+        tickets.push(nouveauTicket);
+        trips[i].availableSeats--;
+        console.log("----------------------");
+        console.log("Ticket acheté avec succès.");
+        console.log("Ticket #" + nouveauTicket.id);
+        console.log("Passager : " + nouveauTicket.nom);
+        console.log("Trajet : " + trips[i].departure + " → " + trips[i].destination,);
+        console.log("Place : " + nouveauTicket.seat_number);
+        console.log("Prix : " + nouveauTicket.price + " DH");
+      } else {
+        console.log("----------------------");
+        console.log("Train complet");
+      }
+
+      return;
+    }
+  }
+
+  console.log("Trajet introuvable.");
+}
+
